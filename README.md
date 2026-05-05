@@ -7,6 +7,7 @@ import streamlit as st
 os → used to check files (like menu.txt, images)
 streamlit → used to build the web app UI
 st is just a shortcut (alias)
+
 🎨 2. UI Setup
 st.set_page_config(page_title="Cloud Coffee ☁️☕")
 
@@ -15,6 +16,7 @@ st.write("Your mood, your perfect brew ☕")
 set_page_config() → sets browser tab title
 st.title() → big heading
 st.write() → normal text
+
 📂 3. File Check
 file_path = "menu.txt"
 
@@ -35,6 +37,7 @@ What these do:
 Document → wraps text into structured format
 FAISS → vector database for similarity search
 HuggingFaceEmbeddings → converts text → vectors
+
 ⚡ 5. Cache Function
 @st.cache_resource
 def load_db():
@@ -56,6 +59,7 @@ embeddings = HuggingFaceEmbeddings()
 return FAISS.from_documents(docs, embeddings)
 Converts text → vectors
 Stores in FAISS DB
+
 ☕ 6. Image Dictionary
 coffee_images = {
     "Latte": "images/latte.jpg",
@@ -63,6 +67,7 @@ coffee_images = {
 }
 Python dictionary (key: value)
 Maps drink → image path
+
 😊 7. Emotion Detection
 def detect_emotion(text):
     text = text.lower()
@@ -81,6 +86,7 @@ Returns categories:
 "comfort"
 "refresh"
 "default"
+
 🔍 8. Filter Logic
 def filter_drinks(docs, mood):
 
@@ -99,6 +105,7 @@ and → both conditions must match
 or → either condition works
 return filtered if filtered else docs
 If filtered list is empty → return original docs
+
 🔍 9. Retrieval Function
 def get_context(user_input):
 query = user_input + " coffee"
@@ -111,6 +118,7 @@ docs = filter_drinks(docs, mood)
 return docs[:2]
 Filters by mood
 Returns top 2 results
+
 🤖 10. Response Generator
 def generate_response(user_input):
 drinks = []
@@ -130,20 +138,24 @@ response += f"👉 **{drink}** – {desc}\n\n"
 Returns:
 
 return response, drinks
+
 💬 11. Chat UI State
 if "messages" not in st.session_state:
     st.session_state.messages = []
 Stores chat history
 Works like memory
+
 🔁 12. Display Messages
 for msg in st.session_state.messages:
 with st.chat_message(msg["role"]):
     st.markdown(msg["content"])
 Displays user + assistant messages
 with → context block
+
 ⌨️ 13. User Input
 user_input = st.chat_input("How are you feeling today?")
 Chat textbox
+
 🚀 14. Main Execution Flow
 if user_input:
 Add user message:
@@ -155,11 +167,13 @@ with st.chat_message("assistant"):
 Show images:
 if img_path and os.path.exists(img_path):
     st.image(img_path)
+    
 ⚠️ 15. Error Handling
 except Exception as e:
     st.error(f"❌ Error: {e}")
 Catches runtime errors
 Displays nicely in UI
+------------------------------------------------
 🧠 Overall Flow (Simple)
 User enters mood
 Detect emotion
